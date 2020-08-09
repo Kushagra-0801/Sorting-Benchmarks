@@ -65,4 +65,15 @@ fn main() {
             .collect::<Vec<u32>>()
     };
     test_on_all(arr);
+    println!("------------REPEATING------------");
+    let arr = {
+        let contents =
+            fs::read_to_string("datasets/repeating").expect("Cannot open repeating dataset");
+        contents
+            .trim_end()
+            .split_ascii_whitespace()
+            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
+            .collect::<Vec<u32>>()
+    };
+    test_on_all(arr);
 }
