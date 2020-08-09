@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+
 pub fn heapsort<T: Ord + Copy>(arr: &mut [T]) {
     make_max_heap(arr);
     let len = arr.len();
@@ -8,11 +10,25 @@ pub fn heapsort<T: Ord + Copy>(arr: &mut [T]) {
 }
 
 fn make_max_heap<T: Ord + Copy>(arr: &mut [T]) {
+    fn trickle_up<T: Ord + Copy>(arr: &mut [T]) {
+        let parent = |idx: usize| (idx - 1) / 2;
+        let mut current = arr.len() - 1;
+        while current > 0 {
+            let p = parent(current);
+            if arr[p] < arr[current] {
+                arr.swap(p, current);
+                current = p;
+            } else {
+                break;
+            }
+        }
+    }
     if arr.len() <= 1 {
         return;
     }
-    make_max_heap(&mut arr[1..]);
-    trickle_down(arr);
+    for i in 1..=arr.len() {
+        trickle_up(&mut arr[..i]);
+    }
 }
 
 fn trickle_down<T: Ord + Copy>(arr: &mut [T]) {
@@ -24,8 +40,8 @@ fn trickle_down<T: Ord + Copy>(arr: &mut [T]) {
     let right = |idx: usize| 2 * idx + 2;
     let mut current = 0;
     loop {
-        let right = right(current);
         let left = left(current);
+        let right = right(current);
         if left >= len {
             break;
         }
@@ -37,10 +53,10 @@ fn trickle_down<T: Ord + Copy>(arr: &mut [T]) {
                 break;
             }
         } else {
-            if arr[left] > arr[right] && arr[left] > arr[current] {
+            if arr[left] >= arr[right] && arr[left] > arr[current] {
                 arr.swap(left, current);
                 current = left;
-            } else if arr[right] > arr[left] && arr[right] > arr[current] {
+            } else if arr[right] >= arr[left] && arr[right] > arr[current] {
                 arr.swap(right, current);
                 current = right;
             } else {

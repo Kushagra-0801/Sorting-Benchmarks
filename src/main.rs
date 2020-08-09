@@ -30,6 +30,7 @@ fn test_on_all(arr: Vec<u32>) {
         "QSort Right",
         arr
     );
+    time!(sorts::heapsort::heapsort, "HeapSort", arr);
 }
 
 fn main() {
