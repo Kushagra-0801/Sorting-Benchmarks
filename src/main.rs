@@ -34,48 +34,32 @@ fn test_on_all(arr: Vec<u32>) {
     time!(sorts::mergesort::mergesort, "MergeSort", arr);
 }
 
+macro_rules! parse_vec {
+    ($name: literal) => {{
+        let contents = fs::read_to_string(concat!("datasets/", $name)).expect(concat!(
+            "Cannot open ",
+            $name,
+            " dataset"
+        ));
+        contents
+            .trim_end()
+            .split_ascii_whitespace()
+            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
+            .collect::<Vec<u32>>()
+    }};
+}
+
 fn main() {
     println!("------------RANDOM------------");
-    let arr = {
-        let contents = fs::read_to_string("datasets/random").expect("Cannot open random dataset");
-        contents
-            .trim_end()
-            .split(", ")
-            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
-            .collect::<Vec<u32>>()
-    };
+    let arr = parse_vec!("random");
     test_on_all(arr);
     println!("------------DESCENDING------------");
-    let arr = {
-        let contents =
-            fs::read_to_string("datasets/descending").expect("Cannot open descending dataset");
-        contents
-            .trim_end()
-            .split_ascii_whitespace()
-            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
-            .collect::<Vec<u32>>()
-    };
+    let arr = parse_vec!("descending");
     test_on_all(arr);
     println!("------------ASCENDING------------");
-    let arr = {
-        let contents =
-            fs::read_to_string("datasets/ascending").expect("Cannot open ascending dataset");
-        contents
-            .trim_end()
-            .split_ascii_whitespace()
-            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
-            .collect::<Vec<u32>>()
-    };
+    let arr = parse_vec!("ascending");
     test_on_all(arr);
     println!("------------REPEATING------------");
-    let arr = {
-        let contents =
-            fs::read_to_string("datasets/repeating").expect("Cannot open repeating dataset");
-        contents
-            .trim_end()
-            .split_ascii_whitespace()
-            .map(|i| i.parse().expect(&format!("Invalid value in data: {}", i)))
-            .collect::<Vec<u32>>()
-    };
+    let arr = parse_vec!("repeating");
     test_on_all(arr);
 }
