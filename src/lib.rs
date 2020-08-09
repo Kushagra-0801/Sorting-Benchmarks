@@ -4,6 +4,7 @@ pub mod sorts {
     pub mod cycle_sort;
     pub mod heapsort;
     pub mod insertion_sort;
+    pub mod mergesort;
     pub mod quicksort;
     pub mod selection_sort;
     pub mod shell_sort;

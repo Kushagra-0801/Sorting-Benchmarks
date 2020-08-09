@@ -31,6 +31,7 @@ fn test_on_all(arr: Vec<u32>) {
         arr
     );
     time!(sorts::heapsort::heapsort, "HeapSort", arr);
+    time!(sorts::mergesort::mergesort, "MergeSort", arr);
 }
 
 fn main() {
