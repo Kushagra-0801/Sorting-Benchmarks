@@ -9,12 +9,16 @@ fn is_sorted<T: Ord + Copy>(arr: &[T]) -> bool {
     true
 }
 
-pub fn time_it<T: Ord + Copy>(f: impl Fn(&mut [T]), mut arr: Vec<T>) -> time::Duration {
-    let start = time::Instant::now();
-    f(&mut arr);
-    let elapsed = start.elapsed();
-    assert!(is_sorted(&arr));
-    elapsed
+pub fn time_it<T: Ord + Copy>(f: impl Fn(&mut [T]), arr: Vec<T>) -> time::Duration {
+    let arrs: Vec<Vec<_>> = (0..10).map(move |_| arr.clone()).collect();
+    let mut time_taken = time::Duration::new(0, 0);
+    arrs.into_iter().for_each(|mut arr| {
+        let start = time::Instant::now();
+        f(&mut arr);
+        time_taken += start.elapsed();
+        assert!(is_sorted(&arr));
+    });
+    time_taken / 10
 }
 
 #[cfg(test)]
