@@ -1,3 +1,4 @@
+/// Sorts an array by recursively sorting left and right halves and merging the sorted arrays.
 pub fn mergesort<T: Ord + Copy>(arr: &mut [T]) {
     let len = arr.len();
     if len <= 1 {
@@ -9,11 +10,23 @@ pub fn mergesort<T: Ord + Copy>(arr: &mut [T]) {
     merge(arr);
 }
 
+/// The merge operation at the heart of mergesort
+/// Two sorted arrays can be in three situations:
+/// 1. Second half comes after first half
+/// 2. Second half comes before first half
+/// 3. Both halves need to be interleaved in some way
+///
+/// ## Merging strategy -
+/// 1. No need to do anything. Already sorted.
+/// 2. The halves need to be swapped. Different for odd and even lengths.
+/// 3. Requires more work.
 fn merge<T: Ord + Copy>(arr: &mut [T]) {
     let mid = arr.len() / 2;
+    // Already Sorted.
     if arr[mid - 1] <= arr[mid] {
         return;
     }
+    // Reverse Order
     if arr[arr.len() - 1] <= arr[0] {
         if arr.len() % 2 == 0 {
             even_descending_merge(arr);
@@ -37,6 +50,16 @@ fn general_merge<T: Ord + Copy>(arr: &mut [T]) {
     }
 }
 
+/// Just swap the elements with their correct place.
+///            +---------+
+///          +-|-------+ |
+///        +-|-|-----+ | |
+///      +-|-|-|---+ | | |
+///      a b c d | e f g h
+///      +-|-|-|---+ | | |
+///        +-|-|-----+ | |
+///          +-|-------+ |
+///            +---------+
 fn even_descending_merge<T: Ord + Copy>(arr: &mut [T]) {
     let mid = arr.len() / 2;
     for i in 0..mid {
@@ -44,6 +67,17 @@ fn even_descending_merge<T: Ord + Copy>(arr: &mut [T]) {
     }
 }
 
+/// Elements create a cycle
+///          +-----------+             
+///        +-|---------+ |             
+///      +-|-|-------+ | |             
+///      | | | +-----|-|-|-+           
+///      a b c d | e f g h i                  
+///      | | | |   +-|-|-|-+
+///      +-|-|-|---+ | | |
+///        +-|-|-----+ | |  
+///          +-|-------+ |
+///            +---------+  
 fn odd_descending_merge<T: Ord + Copy>(arr: &mut [T]) {
     let mid = arr.len() / 2;
     let next_pos = |pos: usize| if pos < mid { pos + mid + 1 } else { pos - mid };
