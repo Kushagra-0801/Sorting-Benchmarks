@@ -52,6 +52,11 @@ pub fn test_on_all<T: Ord + Copy>(
             "QSort Right",
             arr
         ))
+        .chain(once_iter!(
+            sorts::quicksort::quicksort_three_way_partition,
+            "QSort 3-Way",
+            arr
+        ))
         .chain(once_iter!(sorts::heapsort::heapsort, "HeapSort", arr))
         .chain(once_iter!(sorts::mergesort::mergesort, "MergeSort", arr))
 }
