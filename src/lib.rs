@@ -20,7 +20,9 @@ macro_rules! once_iter {
     };
 }
 
-pub fn test_on_all(arr: Vec<u32>) -> impl Iterator<Item = (&'static str, std::time::Duration)> {
+pub fn test_on_all<T: Ord + Copy>(
+    arr: Vec<T>,
+) -> impl Iterator<Item = (&'static str, std::time::Duration)> {
     use std::iter::once;
     once_iter!(sorts::bubble_sort::bubble_sort, "Bubble Sort 1", arr)
         .chain(once_iter!(
