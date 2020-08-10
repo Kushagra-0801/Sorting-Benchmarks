@@ -39,7 +39,7 @@ pub fn basic_quicksort_median_pivot<T: Ord + Copy>(arr: &mut [T]) {
         if arr[lo] > arr[mi] {
             arr.swap(lo, mi);
         }
-        let pivot = arr[hi];
+        let pivot = arr[mi];
         let mut i = 0;
         for j in lo..=hi {
             if arr[j] < pivot {
