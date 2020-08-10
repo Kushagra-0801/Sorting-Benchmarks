@@ -12,4 +12,3 @@ A comparison of common sorting algorithms on different types of inputs.
 - [Quick Sort](src/sorts/quicksort.rs)
 - [Selection Sort](src/sorts/selection_sort.rs)
 - [Shell Sort](src/sorts/shell_sort.rs)
-- [Smooth Sort](src/sorts/smoothsort.rs)

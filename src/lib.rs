@@ -8,7 +8,6 @@ pub mod sorts {
     pub mod quicksort;
     pub mod selection_sort;
     pub mod shell_sort;
-    pub mod smoothsort;
 }
 
 pub mod timer;
