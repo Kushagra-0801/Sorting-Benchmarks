@@ -16,6 +16,7 @@ pub fn time_it<T: Ord + Copy>(f: impl Fn(&mut [T]), mut arr: Vec<T>) -> time::Du
     assert!(is_sorted(&arr));
     elapsed
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
