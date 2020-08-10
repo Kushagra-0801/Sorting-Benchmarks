@@ -90,6 +90,29 @@ pub fn quicksort_three_way_partition<T: Ord + Copy>(arr: &mut [T]) {
     quicksort(arr, &partition);
 }
 
+pub fn quicksort_insertion_below_threshold<T: Ord + Copy>(arr: &mut [T]) {
+    const THRESHOLD: usize = 128;
+    let partition = |arr: &mut [T]| {
+        if arr.len() <= THRESHOLD {
+            crate::sorts::insertion_sort::insertion_sort(arr);
+            return (1, arr.len() - 1);
+        }
+        let pivot = arr[arr.len() - 1];
+        let lo = 0;
+        let hi = arr.len() - 1;
+        let mut i = 0;
+        for j in lo..=hi {
+            if arr[j] < pivot {
+                arr.swap(i, j);
+                i += 1;
+            }
+        }
+        arr.swap(i, hi);
+        (i, i + 1)
+    };
+    quicksort(arr, &partition);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -133,6 +156,20 @@ mod tests {
     fn simple_quicksort_three_way_descending() {
         let mut arr = [24, 10, 7, 4, 3, 2, 1];
         quicksort_three_way_partition(&mut arr);
+        assert_eq!(arr, [1, 2, 3, 4, 7, 10, 24]);
+    }
+
+    #[test]
+    fn quicksort_with_insertion() {
+        let mut arr = [7, 4, 10, 24, 3, 2, 1];
+        quicksort_insertion_below_threshold(&mut arr);
+        assert_eq!(arr, [1, 2, 3, 4, 7, 10, 24]);
+    }
+
+    #[test]
+    fn quicksort_with_insertion_descending() {
+        let mut arr = [24, 10, 7, 4, 3, 2, 1];
+        quicksort_insertion_below_threshold(&mut arr);
         assert_eq!(arr, [1, 2, 3, 4, 7, 10, 24]);
     }
 }

@@ -57,6 +57,11 @@ pub fn test_on_all<T: Ord + Copy>(
             "QSort 3-Way",
             arr
         ))
+        .chain(once_iter!(
+            sorts::quicksort::quicksort_insertion_below_threshold,
+            "QSort Insert",
+            arr
+        ))
         .chain(once_iter!(sorts::heapsort::heapsort, "HeapSort", arr))
         .chain(once_iter!(sorts::mergesort::mergesort, "MergeSort", arr))
 }
