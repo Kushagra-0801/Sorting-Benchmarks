@@ -19,22 +19,22 @@ macro_rules! parse_vec {
 fn main() {
     println!("------------RANDOM------------");
     let arr = parse_vec!("random");
-    for (algo, time) in test_on_all(arr) {
-        println!("{}:\t{:8} ms", algo, time.as_micros());
+    for (algo, time) in test_on_all(&arr) {
+        println!("{:<16}:\t{:8} ms", algo, time.as_micros());
     }
     println!("------------DESCENDING------------");
     let arr = parse_vec!("descending");
-    for (algo, time) in test_on_all(arr) {
-        println!("{}:\t{:8} ms", algo, time.as_micros());
+    for (algo, time) in test_on_all(&arr) {
+        println!("{:<16}:\t{:8} ms", algo, time.as_micros());
     }
     println!("------------ASCENDING------------");
     let arr = parse_vec!("ascending");
-    for (algo, time) in test_on_all(arr) {
-        println!("{}:\t{:8} ms", algo, time.as_micros());
+    for (algo, time) in test_on_all(&arr) {
+        println!("{:<16}:\t{:8} ms", algo, time.as_micros());
     }
     println!("------------REPEATING------------");
     let arr = parse_vec!("repeating");
-    for (algo, time) in test_on_all(arr) {
-        println!("{}:\t{:8} ms", algo, time.as_micros());
+    for (algo, time) in test_on_all(&arr) {
+        println!("{:<16}:\t{:8} ms", algo, time.as_micros());
     }
 }

@@ -16,15 +16,16 @@ pub mod timer;
 use timer::time_it;
 
 macro_rules! once_iter {
-    ($sort: path, $name: expr, $arr: ident) => {
-        once(($name, time_it($sort, $arr.clone())))
-    };
+    ($sort: path, $name: expr, $arr: ident) => {{
+        let arr = $arr.clone();
+        once_with(move || ($name, time_it($sort, $arr.clone())))
+    }};
 }
 
-pub fn test_on_all<T: Ord + Copy>(
-    arr: Vec<T>,
-) -> impl Iterator<Item = (&'static str, std::time::Duration)> {
-    use std::iter::once;
+pub fn test_on_all<'a, T: Ord + Copy>(
+    arr: &'a Vec<T>,
+) -> impl Iterator<Item = (&'static str, std::time::Duration)> + 'a {
+    use std::iter::once_with;
     once_iter!(sorts::bubble_sort::naive_bubble_sort, "Bubble Sort 0", arr)
         .chain(once_iter!(
             sorts::bubble_sort::bubble_sort,
