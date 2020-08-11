@@ -1,6 +1,7 @@
 #![allow(unused)]
 pub mod sorts {
     pub mod bubble_sort;
+    pub mod cocktail_sort;
     pub mod cycle_sort;
     pub mod heapsort;
     pub mod insertion_sort;
@@ -24,10 +25,30 @@ pub fn test_on_all<T: Ord + Copy>(
     arr: Vec<T>,
 ) -> impl Iterator<Item = (&'static str, std::time::Duration)> {
     use std::iter::once;
-    once_iter!(sorts::bubble_sort::bubble_sort, "Bubble Sort 1", arr)
+    once_iter!(sorts::bubble_sort::naive_bubble_sort, "Bubble Sort 0", arr)
+        .chain(once_iter!(
+            sorts::bubble_sort::bubble_sort,
+            "Bubble Sort 1",
+            arr
+        ))
         .chain(once_iter!(
             sorts::bubble_sort::bubble_sort_optimized,
             "Bubble Sort 2",
+            arr
+        ))
+        .chain(once_iter!(
+            sorts::cocktail_sort::naive_cocktail_sort,
+            "Cocktail Sort 0",
+            arr
+        ))
+        .chain(once_iter!(
+            sorts::cocktail_sort::cocktail_sort,
+            "Cocktail Sort 1",
+            arr
+        ))
+        .chain(once_iter!(
+            sorts::cocktail_sort::cocktail_sort_optimized,
+            "Cocktail Sort 2",
             arr
         ))
         .chain(once_iter!(sorts::cycle_sort::cycle_sort, "Cycle Sort", arr))
