@@ -64,7 +64,7 @@ pub fn cocktail_sort_optimized<T: Ord>(arr: &mut [T]) {
         for j in (i + 1)..(len - i) {
             if arr[j - 1] > arr[j] {
                 arr.swap(j - 1, j);
-                swapped = false;
+                swapped = true;
             }
         }
         if !swapped {
@@ -73,7 +73,7 @@ pub fn cocktail_sort_optimized<T: Ord>(arr: &mut [T]) {
         for j in ((i + 1)..(len - i - 1)).rev() {
             if arr[j - 1] > arr[j] {
                 arr.swap(j - 1, j);
-                swapped = false;
+                swapped = true;
             }
         }
         if !swapped {
